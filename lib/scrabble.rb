@@ -17,6 +17,10 @@ class Scrabble
 
   def self.highest_score_from(words)
     high_scores = words.group_by { |word| score(word) }.max
-    high_scores[1].min_by(&:length) # instead of { |word| word.length }
+    if high_scores[1].any? { |word| word.length == 7 }
+      high_scores[1].detect { |word| word.length == 7 }
+    else
+      high_scores[1].min_by(&:length)
+    end
   end
 end
